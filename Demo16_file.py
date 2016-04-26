@@ -24,8 +24,15 @@
 '''
 
 # 将上述文件内容分类保存
+# Python读取utf-8或则Unicode等非ANSI文件时，会将文件头中标识文件类型的字符连带读出，因此下面的代码在读第一行时，
+# 总是会多个冒号，测试如下：
+# f=open('D:/output1.txt', mode='rb')   # D:/output1.txt是以utf-8编码保存的空文件
+# print(f.readline())
+# f.close()
+# 输出：b'\xef\xbb\xbf' 这是一个标识文件类型的字符
+'''
 source = open('D:/output.txt', mode='r+', encoding='utf-8')
-Q11 = open('D:/Q11.txt', mode='r+', encoding='utf-8')
+Q11 = open('D:/Q11.txt', mode='w+', encoding='utf-8')
 Q12 = open('D:/Q12.txt', mode='w+', encoding='utf-8')
 Q21 = open('D:/Q21.txt', mode='w+', encoding='utf-8')
 Q22 = open('D:/Q22.txt', mode='w+', encoding='utf-8')
@@ -43,3 +50,61 @@ for each_line in source:
         count +=1
 
 source.close();Q11.close();Q12.close();Q21.close();Q22.close()
+'''
+
+# 采用分割的方式解决上述问题
+'''
+source = open('D:/output.txt', mode='r+', encoding='utf-8')
+Q11 = open('D:/Q11.txt', mode='w+', encoding='utf-8')
+Q12 = open('D:/Q12.txt', mode='w+', encoding='utf-8')
+Q21 = open('D:/Q21.txt', mode='w+', encoding='utf-8')
+Q22 = open('D:/Q22.txt', mode='w+', encoding='utf-8')
+
+Q1List = [Q11, Q12]
+Q2List = [Q21, Q22]
+count=0
+for each_line in source:
+    if each_line[:6] != '======':
+        (name, content) = each_line.split('：', 1)  # 以each_line的前一个冒号进行分割得到两部分
+        if name == '阿Q1':
+            Q1List[count].write(content)
+        else:
+            Q2List[count].write(content)
+    else:
+        count +=1
+
+source.close();Q11.close();Q12.close();Q21.close();Q22.close()
+'''
+
+# 上述是在已知子文件个数的情况下采用列表实现的，如果事先并不知道对话的详细情况，则应做修改
+def writeToFile(count, Q1_content, Q2_content):
+    Q1_file_name = 'D:/Q1_' + str(count) + ".txt"
+    Q2_file_name = 'D:/Q2_' + str(count) + ".txt"
+    Q1_file = open(Q1_file_name, 'w')
+    Q2_file = open(Q2_file_name, 'w')
+    Q1_file.writelines(Q1_content)
+    Q2_file.writelines(Q2_content)
+    Q1_file.close();Q1_file.close()
+    Q1_content=[];Q2_content=[]
+
+def splitFile(sourceFileName):
+    source = open(sourceFileName, mode='r+', encoding='utf-8')
+    count=1
+    Q1_content = []
+    Q2_content = []
+
+    for each_line in source:
+        if each_line[:6] != '======':
+            (name, content) = each_line.split('：', 1)
+            if name == '阿Q1':
+                Q1_content.append(content)
+            else:
+                Q2_content.append(content)
+        else:
+            writeToFile(count, Q1_content, Q2_content)
+            count += 1
+    writeToFile(count, Q1_content, Q2_content)
+    source.close()
+
+splitFile('D:/output.txt')
+

@@ -14,6 +14,10 @@ print(dict2['a'])
 dict1['4'] = '彭'
 print(dict1['4'])
 
+# 如果所修改的键不在字典中，则会自动增加
+dict1['5'] = '周'
+print(dict1)
+
 # 给字典的键设置值，如果键不存在，则添加，如果键存在，则不变
 dict3 = {'a':None,'b':'B'}
 print(dict3)
@@ -21,10 +25,6 @@ dict3.setdefault('c', 'C')
 print(dict3)
 dict3.setdefault('a', 'AA')
 print(dict3)
-
-# 如果所修改的键不在字典中，则会自动增加
-dict1['5'] = '周'
-print(dict1)
 
 # 获取字典的所有键：keys()
 for eachKey in dict2.keys():

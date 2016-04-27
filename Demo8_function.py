@@ -130,3 +130,16 @@ print(function12())
 # python引用变量的顺序：当前作用域局部变量->外层作用域变量->当前模块中的全局变量->python内置变量
 # global关键字用来在函数或其他局部作用域中使用全局变量。但是如果不修改全局变量也可以不使用global关键字。
 # nonlocal关键字用来在函数或其他作用域中使用外层(非全局)变量。
+
+# 结合后面学习的类，重新回顾Python的函数调用：Python中定义的函数也是对象，通过()来实现函数调用
+class A(object):
+    def f(self):
+        print("f")
+def ff():
+    print("ff")
+a=A()     # 实例化对象A，调用A的__init__()方法
+a.f()     # 调用对象a的f方法
+xf=a.f    # 获取函数对象f
+xf()      # 调用f方法
+a.f=ff    # 获取非类函数的函数对象
+a.f()     # 调用ff方法

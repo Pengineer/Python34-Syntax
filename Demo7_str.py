@@ -1,10 +1,10 @@
-# 字符串操作
+﻿# 字符串操作
 
 # 将字符串切割成3元组
 str1 = 'aabbccbbdd'
 print(str1.partition('bb'))  # 注意结果
 
-# 将字符串切割成列表
+# 将字符串切割成列表,split第二个参数表示切割次数，默认全部切割
 str2 = 'aabbccbbdd'
 print(str2.split('bb'))
 

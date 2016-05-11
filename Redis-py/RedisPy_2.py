@@ -146,7 +146,7 @@ class TestCh01(unittest.TestCase):
                   conn.keys('article:*') + conn.keys('group:*')
             )
         if to_del:
-            conn.delete(*to_del)
+            conn.delete(*to_del) # 这里用到了Python中关于任意参数列表和参数列表的分拆语法
 
 if __name__ == '__main__':
     unittest.main()

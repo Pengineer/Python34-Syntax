@@ -8,7 +8,8 @@
  Redis执行MUTIL命令后，会创建一个队列，将其后的指令都放入队列中，当碰到EXEC命令时，就开始一个接一个的执行队列
  里面的指令。
 
- Redis事务在Python中是通过流水线（pipeline）来实现的。
+ Redis事务在Python中是通过流水线（pipeline）来实现的。这种方式可以减少客户端与Redis服务器之间的网络通信次数来
+ 提升Redis在执行多个命令时的性能。
 '''
 import redis
 import time
@@ -19,7 +20,7 @@ def trans(conn):
     pl.incr('var:')
     time.sleep(.1)
     pl.incr('var:', -4)
-    list = pl.execute()  # 返回的什么结果？
+    list = pl.execute()  # execute()返回的是管道中每一个命令执行后的返回结果的列表
     print(list)
     print(conn.get('var:'))
 

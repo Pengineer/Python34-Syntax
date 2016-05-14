@@ -50,7 +50,7 @@ def post_article(conn, user, title, link):
         'votes':1,
     })
 
-    conn.zadd('score:', article, now + VOTE_SCORE) # 给文章设置初始分数
+    conn.zadd('score:', article, now + VOTE_SCORE) # 给文章设置初始分数（在python中执行zadd命令需要先输入成员，后输入分值，这与Redis标准的先输入分值，后输入成员的做法正好相反）
     conn.zadd('time:', article, now)
     return article_id
 

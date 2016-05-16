@@ -14,6 +14,8 @@
  UNWATCH命令可以在WATCH命令执行之后、MULTI命令执行之前对连接进行重置（reset）。
 
  如果其它客户端修改了本客户端WATCH的key，Redis会通知执行了WATCH的客户端，这种做法称为乐观锁，传统关系数据库中的锁是悲观锁。
+
+ 多客户端同时处理相同的数据时，WATCH-MULTI-EXEC等命令常用来防止数据出错。
 '''
 
 import time

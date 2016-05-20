@@ -56,3 +56,7 @@ f = open("D:/output.txt", mode='w+', encoding='utf-8')
 f.write("风萧萧兮易水寒，壮士一去兮不复还。\n")
 f.write("三十功名尘与土，八千里路云和月。")
 f.close()
+
+# 实际中个人推荐文件的打开方式：
+# with open('filepath') as f:
+#     pass
